@@ -22,4 +22,5 @@ def run():
     print("10 closest stations: ", distance_list[:10])
     print("10 farthest stations: ", distance_list[-10:])
 
+
 run()
