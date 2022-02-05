@@ -104,7 +104,7 @@ def rivers_by_station_number(stations, N):
 
 
 def stations_by_distance(stations, p):
-    """Sort stations by distance"""
+    """Sort stations by distance, giving a list of tuples of station & distance from a given coordinates"""
 
     #Create a list to hold the result
     station_distance = []
