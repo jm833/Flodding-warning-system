@@ -3,12 +3,7 @@
 # SPDX-License-Identifier: MIT
 """This module provides a model for a monitoring station, and tools
 for manipulating/modifying station data
-
 """
-
-
-from sklearn.utils import check_consistent_length
-from sqlalchemy import false
 
 
 class MonitoringStation:
@@ -50,6 +45,6 @@ class MonitoringStation:
         return consistent
 
 def inconsistent_typical_range_stations(stations):
-     """Given a list of station objects, returns a list of stations that have inconsistent data"""
-     inconsistent_list = [station.name for station in stations if station.typical_range_consistent() is false ]
-     return inconsistent_list
+    """Given a list of station objects, returns a list of stations that have inconsistent data"""
+    inconsistent_list = [station.name for station in stations if station.typical_range_consistent() is False ]
+    return inconsistent_list
