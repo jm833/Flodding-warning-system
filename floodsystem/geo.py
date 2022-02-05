@@ -8,6 +8,9 @@ geographical data.
 
 from typing import Counter
 from floodsystem.stationdata import build_station_list
+from haversine import haversine, Unit
+from utils import sorted_by_key
+
 
 def rivers_with_station(stations):
     """find rivers monitored by given stations"""
@@ -25,12 +28,11 @@ def rivers_with_station(stations):
     for station in data:
         if station.name in station_names:
             rivers.add(station.river)
-    
+
     all_rivers = list(rivers)
     all_rivers.sort()
     # return the rivers monitored by the given stations
     return all_rivers
-
 
 
 def stations_by_river(stations):
@@ -52,15 +54,12 @@ def stations_by_river(stations):
                 river_stations[station.river].append(str(station.name))
             except KeyError:
                 river_stations[station.river] = [str(station.name)]
-                
 
     # sort the value which is a list, did not work
     for key in river_stations:
         river_stations[key].sort()
 
-        
     return river_stations
-
 
 
 def rivers_by_station_number(stations, N):
@@ -73,7 +72,6 @@ def rivers_by_station_number(stations, N):
     river_names = []
     for item in stations:
         river_names.append(item.river)
-
 
     # count the number of stations monitoring a river
     counter = {}
@@ -89,7 +87,7 @@ def rivers_by_station_number(stations, N):
     river_number = []
     for key, value in counter.items():
         river_number.append((key,value))
-    
+
     # sort the rivers in a descending order of the number of stations monitoring it
     river_number.sort(key = lambda tup:tup[1], reverse=True)
 
@@ -99,8 +97,39 @@ def rivers_by_station_number(stations, N):
 
     i = 0
     while river_number[i][1] >= threshold:
-            f_result.append(river_number[i])
-            i += 1
+        f_result.append(river_number[i])
+        i += 1
 
     return f_result
-                
+
+
+def stations_by_distance(stations, p):
+    """Sort stations by distance"""
+
+    #Create a list to hold the result
+    station_distance = []
+    
+    #Append the list by MonitoringStation Objets and the distance between their coordinates and the given coordinate p
+    for station in stations:
+        distance = haversine(station.coord, p)
+        station_distance.append((station, distance))
+        
+    return sorted_by_key(station_distance,1)
+
+    
+
+def stations_within_radius(stations, centre, r):
+    """List all stations within a given radius r from a given centre"""
+
+    result = []
+
+    for station in stations:
+        #distance between the station and the given centre
+        distance = haversine(station.coord, centre)
+
+        #List stations within the radius
+        if distance < r:
+            result.append(station.name)
+        else:
+            continue
+    return result
