@@ -7,6 +7,10 @@ for manipulating/modifying station data
 """
 
 
+from sklearn.utils import check_consistent_length
+from sqlalchemy import false
+
+
 class MonitoringStation:
     """This class represents a river level monitoring station"""
 
@@ -38,3 +42,14 @@ class MonitoringStation:
         d += "   river:         {}\n".format(self.river)
         d += "   typical range: {}".format(self.typical_range)
         return d
+
+    def typical_range_consistent(self):
+        """Check the consistency of the data. 
+        return true when the data is available and low range < high range"""
+        consistent = type(self.typical_range) is tuple and self.typical_range !=(0.,0.) and self.typical_range[0] < self.typical_range[1]
+        return consistent
+
+def inconsistent_typical_range_stations(stations):
+     """Given a list of station objects, returns a list of stations that have inconsistent data"""
+     inconsistent_list = [station.name for station in stations if station.typical_range_consistent() is false ]
+     return inconsistent_list
