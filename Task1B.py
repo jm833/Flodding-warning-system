@@ -2,6 +2,7 @@ from floodsystem.geo import stations_by_distance
 from floodsystem.stationdata import build_station_list
 
 
+
 def run():
     """Task 1B"""
     #Build a list of stations
@@ -15,12 +16,10 @@ def run():
     station_distance = stations_by_distance(stations, p)
  
     #List only the name, town and distance of stations
-    distance_list = []
-    for (stations,distance) in station_distance:
-        distance_list.append(stations.name, stations.town, distance)
+    distance_list = [(stations.name, stations.town, distance)for (stations,distance) in station_distance]
+
 
     print("10 closest stations: ", distance_list[:10])
     print("10 farthest stations: ", distance_list[-10:])
-
 
 run()
