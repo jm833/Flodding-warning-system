@@ -109,7 +109,6 @@ def stations_by_distance(stations, p):
 
     #Create a list to hold the result
     station_distance = []
-    
     #Append the list by MonitoringStation Objets and the distance between their coordinates and the given coordinate p
     for station in stations:
         distance = haversine(station.coord, p)
