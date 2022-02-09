@@ -4,7 +4,6 @@ from floodsystem.geo import rivers_by_station_number
 from floodsystem.geo import rivers_with_station
 from floodsystem.geo import stations_by_river
 from floodsystem.stationdata import build_station_list
-from floodsystem.station import MonitoringStation
 
 
 def test_rivers_with_station():
