@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: MIT
 """Unit test for the station module"""
 
-from re import T
 from floodsystem.station import *
 
 
