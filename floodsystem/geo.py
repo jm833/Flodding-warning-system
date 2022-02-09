@@ -8,7 +8,7 @@ geographical data.
 
 from typing import Counter
 from floodsystem.stationdata import build_station_list
-import haversine
+from haversine import haversine,Unit
 from floodsystem.utils import sorted_by_key
 
 
