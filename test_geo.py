@@ -28,7 +28,6 @@ def test_stations_within_radius():
 test_stations_within_radius()
 
 
-
 def test_rivers_with_station():
 
     # get the data for testing
@@ -41,7 +40,6 @@ def test_rivers_with_station():
     # check for no repetition and sorted in alphabetical order
     for i in range(len(r) - 1):
         assert r[i] < r[i + 1]
-
 
 
 
@@ -74,7 +72,6 @@ def test_stations_by_river():
     # check whether all the data is recorded and sorted
     for item in pair:
         assert item[0] not in keys
-
 
 
 
