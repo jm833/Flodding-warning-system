@@ -9,8 +9,9 @@ more must be equal in count
 each greater than the next
 """
 
-from unittest import result
-from floodsystem.geo import *
+from floodsystem.geo import rivers_with_station
+from floodsystem.geo import stations_by_river
+from floodsystem.geo import rivers_by_station_number
 from floodsystem.stationdata import build_station_list
 
 
