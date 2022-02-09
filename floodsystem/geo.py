@@ -104,11 +104,11 @@ def rivers_by_station_number(stations, N):
 
 
 def stations_by_distance(stations, p):
-    """Sort stations by distance, giving a list of tuples of station & distance from a given coordinates"""
+    """input:list of station objects, centre coordinates
+       output: a list of tuples of station object& distance from a given coordinates, sorted by distance"""
 
     #Create a list to hold the result
     station_distance = []
-    
     #Append the list by MonitoringStation Objets and the distance between their coordinates and the given coordinate p
     for station in stations:
         distance = haversine(station.coord, p)
@@ -119,7 +119,8 @@ def stations_by_distance(stations, p):
     
 
 def stations_within_radius(stations, centre, r):
-    """List all stations within a given radius r from a given centre"""
+    """input: list of station objects, centre, radius
+       output: list of all station objects within a given radius r from a given centre"""
 
     result = [station for station in stations if haversine(station.coord, centre) <= r]
         
