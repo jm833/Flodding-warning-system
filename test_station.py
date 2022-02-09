@@ -39,13 +39,15 @@ def test_typical_range_consistent():
 
 def test_inconsistent_typical_range_stations():
     #Create 3 stations, with last two having inconsistent data
-    station1 = MonitoringStation("s id", "m id","some station", (1.0,2.2),(-2.3,3.4),"river x","my town")
-    station2 = MonitoringStation("s id", "m id","some station", (1.0,2.2),(0.0,0.0),"river x","my town")
-    station3 = MonitoringStation("s id", "m id","some station", (1.0,2.2),(1.0,0.5),"river x","my town")
+    station1 = MonitoringStation("s id", "m id","A station", (1.0,2.2),(-2.3,3.4),"river x","my town")
+    station2 = MonitoringStation("s id", "m id","B station", (1.0,2.2),(0.0,0.0),"river x","my town")
+    station3 = MonitoringStation("s id", "m id","C station", (1.0,2.2),(1.0,0.5),"river x","my town")
     station_list = [station1,station2,station3]
 
-    assert inconsistent_typical_range_stations([station_list])==[station2.name,station3.name] 
+    assert inconsistent_typical_range_stations(station_list)==[station2.name,station3.name] 
+
+test_create_monitoring_station()
+test_typical_range_consistent()
+test_inconsistent_typical_range_stations()
 
 
-
-    
