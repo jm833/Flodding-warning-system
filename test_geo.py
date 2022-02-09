@@ -99,3 +99,4 @@ def test_rivers_by_station_number():
     # check the result is sorted by number of stations
     for i in range(x-1):
         assert r[i][1] >= r[i+1][1]
+        
