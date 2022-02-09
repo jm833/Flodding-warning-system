@@ -10,7 +10,7 @@ def run():
 
     #The coordinates of Cambridge city centre
     p = (52.2053, 0.1218)
-    print(stations_by_distance)
+   # print(stations_by_distance)
 
     #Find the distance between all stations and Cambridge city centre
     station_distance = stations_by_distance(stations, p)
