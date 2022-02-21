@@ -44,6 +44,17 @@ class MonitoringStation:
         consistent = type(self.typical_range) is tuple and self.typical_range !=(0.,0.) and self.typical_range[0] < self.typical_range[1]
         return consistent
 
+    def relative_water_level(self):
+        rwl = None
+        if self.latest_level == None:
+            rwl = None
+        elif self.typical_range_consistent() is False:
+            rwl = None
+        else:
+            rwl = (self.latest_level - self.typical_range[0])/(self.typical_range[1]-self.typical_range[0])
+        return rwl
+        
+
 def inconsistent_typical_range_stations(stations):
     """Given a list of station objects, returns a list of stations that have inconsistent data"""
     inconsistent_list = [station.name for station in stations if station.typical_range_consistent() is False ]
