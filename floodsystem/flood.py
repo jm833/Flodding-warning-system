@@ -8,9 +8,7 @@ def stations_level_over_threshold(stations, tol):
     """find stations which has relative water level(rwl) higher than a threshold"""
 
     # fetch the latest data of each river
-    for station in stations:
-       if station.latest_level == None:
-            update_water_levels(station)
+    update_water_levels(stations)
     river_over_tol = []
 
     #find rivers with rwl higher than a threshold 
@@ -31,9 +29,7 @@ def stations_highest_rel_level(stations, N):
     """find the rivers under the highest risk of flooding"""
     
     # fetch data
-    for station in stations:
-       if station.latest_level == None:
-            update_water_levels(station)
+    update_water_levels(stations)
     data = []
 
     # pair rivers with their relative water levle
