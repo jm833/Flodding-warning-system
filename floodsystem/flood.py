@@ -9,13 +9,16 @@ def stations_level_over_threshold(stations, tol):
 
     # fetch the latest data of each river
     update_water_levels(stations)
-    river_over_tol = []
+    return level_over_threshold(stations,tol)
 
-    #find rivers with rwl higher than a threshold 
-    for station in stations:
+def level_over_threshold(indata,th):
+    river_over_tol = []
+    
+     #find rivers with rwl higher than a threshold 
+    for station in indata:
         if station.relative_water_level() == None:
             continue
-        elif station.relative_water_level() > tol:
+        elif station.relative_water_level() > th:
             river_over_tol.append((station, station.relative_water_level()))
 
     #sort the result
@@ -25,15 +28,20 @@ def stations_level_over_threshold(stations, tol):
 
 
 
+
 def stations_highest_rel_level(stations, N):
     """find the rivers under the highest risk of flooding"""
     
     # fetch data
     update_water_levels(stations)
+    return highest_rel_level(stations, N)
+
+
+def highest_rel_level(indata,n):
     data = []
 
     # pair rivers with their relative water levle
-    for station in stations:
+    for station in indata:
         if station.relative_water_level() != None:
             data.append((station, station.relative_water_level()))
     
@@ -41,9 +49,8 @@ def stations_highest_rel_level(stations, N):
     data.sort(key = lambda tup:tup[1], reverse=True)
 
     # return required number of rivers
-    result = data[:N]
+    result = data[:n]
 
     return result
-
 
 

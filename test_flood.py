@@ -37,8 +37,8 @@ def test_stations_level_over_threshold():
 
     list = [station1, station2, station3, station4]
 
-    assert len(stations_level_over_threshold(list, 1)) == 1
-    assert stations_level_over_threshold(list, 1)[0][0].name == "C station"
+    assert len(level_over_threshold(list, 1)) == 1
+    assert level_over_threshold(list, 1)[0][0].name == "C station"
 
 test_stations_level_over_threshold()
 
@@ -60,10 +60,10 @@ def test_stations_highest_rel_level():
 
     list = [station1, station2, station3, station4]
 
-    assert stations_highest_rel_level(list, 3)[0][0].name == "C station"
-    assert stations_highest_rel_level(list, 3)[1][0].name == "A station"
-    assert stations_highest_rel_level(list, 3)[2][0].name == "B station"
-    assert len(stations_highest_rel_level(list, 3)) == 3
+    assert highest_rel_level(list, 3)[0][0].name == "C station"
+    assert highest_rel_level(list, 3)[1][0].name == "A station"
+    assert highest_rel_level(list, 3)[2][0].name == "B station"
+    assert len(highest_rel_level(list, 3)) == 3
 
 
 test_stations_highest_rel_level()
