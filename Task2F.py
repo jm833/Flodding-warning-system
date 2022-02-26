@@ -2,17 +2,29 @@ from floodsystem.plot import *
 from floodsystem.flood import stations_highest_rel_level
 from floodsystem.stationdata import build_station_list
 
-stations = build_station_list()
+def task2F():
+    """Task 2F"""
+    dt = 2
+    N = 5
+    p = 4
 
-#produce the x and y variable: the 5 most risky rivers and their levels
-data= stations_highest_rel_level(stations,5)
-station = []
-station.append(data[i][0] for i in range(5))
+    # Build list of stations
+    stations = build_station_list()
+    
+    # Get the station objects out of the list of names
+    risky_stations = stations_highest_rel_level(stations, N)
+    risky_station_objects = [i[0] for i in risky_stations]
 
-#plots the water levels over the past 2 days for the 5 stations at which the current relative water level is greatest.
-for i in stations:
-    for s in station:
-        if s == i.name:
-            dates, levels = fetch_measure_levels(i.measure_id, dt = timedelta(2))
+    for station in risky_station_objects:
+        dates, levels = fetch_measure_levels(
+            station.measure_id, dt=datetime.timedelta(days=dt))
+        if len(dates) == 0 or len(levels) == 0:
+            continue  # Deal with empty lists appearing
+        plot_water_level_with_fit(station, dates, levels, p)
+        plt.show()
+    
 
-            plot_water_level_with_fit(station, dates, levels, p=4)
+if __name__ == "__main__":
+
+    # Run Task2F
+    task2F()

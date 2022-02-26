@@ -13,7 +13,8 @@ def task2E():
     #plots the water levels over the past 10 days for the 5 stations at which the current relative water level is greatest.
     for station in risky_station_objects:
         dates, levels = fetch_measure_levels(station.measure_id, dt = datetime.timedelta(days=10))
-
+        if len(dates) == 0 or len(levels) == 0:
+            continue  # Deal with empty lists appearing
         plot_water_levels(station,dates,levels)
         plt.show()
 

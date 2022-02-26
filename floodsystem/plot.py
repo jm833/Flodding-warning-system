@@ -1,3 +1,4 @@
+from turtle import color
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 from floodsystem.datafetcher import *
@@ -13,7 +14,7 @@ def plot_water_levels(station, dates, levels):
     plt.xlabel('date')
     plt.ylabel('water level (m)')
     plt.xticks(rotation=45);
-    plt.title('Station{}'.format(station.name))
+    plt.title('Station:{}'.format(station.name))
 
     # Display plot
     plt.tight_layout()  # This makes sure plot does not cut off date labels
@@ -22,19 +23,20 @@ def plot_water_levels(station, dates, levels):
 
 
 def plot_water_level_with_fit(station, dates, levels, p):
-    """plots the water level data and the best-fit polynomial"""
-    poly,time_shift = polyfit(dates, levels, p)
-    plt.plot(dates, levels, 'real')
-    plt.plot(dates, poly, 'best_fit')
-    for d,l in zip(dates, levels):
-        if l == station.typical_range[0]:
-            plt.plot(d, l, marker='o', color='green')
-        elif l == station.typical_range[1]:
-            plt.plot(d, l, marker='*', color='red')
-    plt.xlabel("Date")
-    plt.ylabel("Water Level")
-    plt.xticks(rotation = 45)
-    plt.title("Station {}".format(station.name))
+    """Plots the historical water levels of station given by dates and levels.
+    It then plots those levels along with a polynomial best fit of degree
+    p which can then be used to estimate future water levels"""
+
+    plt.plot(dates,levels,label = "real")
+
+    best_fit, offset = polyfit(dates, levels, p)
+    x = matplotlib.dates.date2num(dates)
+    y = best_fit(x - offset)
+    plt.plot(dates, y, label="Best Fit")
+    plt.axhline(station.typical_range[0],label = "typical low", color = "g")
+    plt.axhline(station.typical_range[1],label = "typical high", color = "r")
+    plt.title('Station:{}'.format(station.name))
+    plt.legend()
     plt.show()
     
 

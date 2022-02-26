@@ -1,27 +1,20 @@
 import numpy as np
 import matplotlib
 
-
 def polyfit(dates, levels, p):
-    """a function that given the water level time history (dates, levels) 
-    for a station computes a least-squares fit of a polynomial of degree p 
-    to water level data. 
-    return: a tuple of (i) the polynomial object and 
-    (ii) any shift of the time (date) axis"""
-    x_f = matplotlib.dates.date2num(dates)
-    x = [i - x_f[0] for i in x_f]
-    y = levels
-
-    # Using shifted x values, find coefficient of best-fit
-    # polynomial f(x) of degree p
-    p_coeff = np.polyfit(x , y, p)
-
-    # Convert coefficient into a polynomial that can be evaluated
-    # e.g. poly(0.3)
+    """Returns a polynomial of degree p representing the best fit for a function
+    f(dates) = levels. It offsets dates such that the minimum value of the domain
+    is equal to 0 to prevent floating point errors. The offset is returned alongside
+    the polynomial as (polynomial,offset)."""
+    times = matplotlib.dates.date2num(dates)
+    dt = np.min(times)
+    times = times - dt
+    p_coeff = np.polyfit(times, levels, p)
     poly = np.poly1d(p_coeff)
 
+    return poly, dt
 
-    return poly, x_f[-1]
+
 
 
 
