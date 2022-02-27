@@ -8,7 +8,7 @@ def run():
         print(type(polynomial_derivatives(station)[0]))
         print(type(polynomial_derivatives(station)[1]))
 
-    print(issue_warning(data))
+    # print(issue_warning(data))
 
 
 if __name__ == "__main__":
