@@ -12,27 +12,29 @@ def polynomial_derivatives(station):
     """input: a station object
     output: a tuple of 1st and 2nd derivatives of the water-level polynomial at the latest time"""
     #convert to relative water levels
-    station_rwl = [station, station.relative_water_level()]
+    if station.typical_range_consistent():
+        station_rwl = [station, station.relative_water_level()]
 
-    #fetch dates-level data and create a list of dates in numbers.
-    dates, levels = fetch_measure_levels(station.measure_id, dt = timedelta(days = 5))
-    dates_num = matplotlib.dates.date2num(dates)
+        #fetch dates-level data and create a list of dates in numbers.
+        dates, levels = fetch_measure_levels(station.measure_id, dt = timedelta(days = 5))
+        dates_num = matplotlib.dates.date2num(dates)
 
-    #give the best fit curve function and the time shift
-    poly, timeshift =  polyfit(dates, levels, 3)
-    latest_time = dates_num[-1] - timeshift
-    #give the 1st derivative and the 2nd derivative of the water_level function.
-    #can give different weight to the derivative in the following analysis
-    dp_expression = poly.deriv()
-    d2p_expression = poly.deriv(2)
+        #give the best fit curve function and the time shift
+        poly, timeshift =  polyfit(dates, levels, 3)
+        latest_time = dates_num[-1] - timeshift
+        #give the 1st derivative and the 2nd derivative of the water_level function.
+        #can give different weight to the derivative in the following analysis
 
-    dp = dp_expression(latest_time)
-    d2p = d2p_expression(latest_time)
+        dp_expression = poly.deriv()
+        d2p_expression = poly.deriv(2)
 
-    dpval = dp.item()
-    d2pval = d2p.item()
+        dp = dp_expression(latest_time)
+        d2p = d2p_expression(latest_time)
 
-    return (dpval,d2pval)
+        dpval = dp.item()
+        d2pval = d2p.item()
+
+        return (dpval,d2pval)
 
 
 def obtain_rwl(station):
