@@ -5,8 +5,13 @@ def run():
     data = build_station_list()
 
     for station in data:
-        print(type(polynomial_derivatives(station)[0]))
-        print(type(polynomial_derivatives(station)[1]))
+        try:
+            print(type(polynomial_derivatives(station)[0]))
+            print(type(polynomial_derivatives(station)[1]))
+        except TypeError:
+            print(0,0)
+            
+        
 
     # print(issue_warning(data))
 

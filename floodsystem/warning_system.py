@@ -34,11 +34,8 @@ def polynomial_derivatives(station):
         dpval = dp.item()
         d2pval = d2p.item()
 
-        try:
-            return (dpval,d2pval)
-        except TypeError:
-            return (0, 0)
-            
+        return ( dpval,d2pval)
+        
 
 
 def obtain_rwl(station):
