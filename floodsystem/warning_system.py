@@ -32,6 +32,9 @@ def risk_assessment():
     dp = derivative(poly,latest_time)
     d2p = derivative(dp, latest_time)
 
+def get_rwl(station):
+    return station.relative_water_level()
+
 
 
 
