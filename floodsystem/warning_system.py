@@ -1,4 +1,5 @@
 from datetime import timedelta
+from logging import warning
 import numpy as np
 from floodsystem.analysis import *
 from floodsystem.station import *
@@ -28,10 +29,55 @@ def polynomial_derivatives(station):
     dp = dp_expression(latest_time)
     d2p = d2p_expression(latest_time)
 
-    return (dp,d2p)
+    dpval = dp.item()
+    d2pval = d2p.item()
+
+    return (dpval,d2pval)
 
 
+def obtain_rwl(station):
+    rwl = station.relative_water_level()
 
+    return rwl
+
+def calculate_kvalue(stations):
+    data = build_station_list()
+
+    valid_rivers = []
+
+    for station in stations:
+        if station.typical_range_consistent():
+            valid_rivers.append(station)
+    
+    k = dict()
+
+    for v in valid_rivers:
+        a = obtain_rwl(v)
+        b = (polynomial_derivatives(v)[0])
+        c = (polynomial_derivatives(v)[1])
+        kvalue = 0.63 * a + 0.36 * b + 0.01 * c
+        k[v.name] = kvalue
+    
+    return type(a)
+
+def issue_warning(stations):
+    k = calculate_kvalue(stations)
+    alert = None
+
+    warning = dict()
+
+    for key, value in k.items():
+        if value >= 1.5:
+            alert = key + "(green flooding alert)"
+            warning[key] = alert
+        elif value >= 1.9:
+            alert = key + "(yellow flooding alert)"
+            warning[key] = alert
+        elif value >= 2.2:
+            alert = key + "(red flooding alert)"
+            warning[key] = alert
+    
+    return warning
 
 
 
