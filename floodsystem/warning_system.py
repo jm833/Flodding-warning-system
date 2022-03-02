@@ -13,33 +13,54 @@ def polynomial_derivatives(station):
     output: a tuple of 1st and 2nd derivatives of the water-level polynomial at the latest time"""
     #convert to relative water levels
     if station.typical_range_consistent():
-        station_rwl = [station, station.relative_water_level()]
-
+        
+        
         #fetch dates-level data and create a list of dates in numbers.
         dates, levels = fetch_measure_levels(station.measure_id, dt = timedelta(days = 5))
         dates_num = matplotlib.dates.date2num(dates)
-
+        try:
+            levels = np.array(levels)
+            levels = (levels - station.typical_range[0])/(station.typical_range[1]-station.typical_range[0])
+        except(TypeError, ValueError, KeyError, TypeError):
+            #print("error with levels")
+            pass
+        
+        
         #give the best fit curve function and the time shift
-        poly, timeshift =  polyfit(dates, levels, 3)
-        latest_time = dates_num[-1] - timeshift
         #give the 1st derivative and the 2nd derivative of the water_level function.
         #can give different weight to the derivative in the following analysis
+        try:
+            poly, timeshift =  polyfit(dates, levels, 3)
+            latest_time = dates_num[-1] - timeshift
+            dp_expression = poly.deriv()
+            d2p_expression = poly.deriv(2)
 
-        dp_expression = poly.deriv()
-        d2p_expression = poly.deriv(2)
+            dp = dp_expression(latest_time)
+            d2p = d2p_expression(latest_time)
 
-        dp = dp_expression(latest_time)
-        d2p = d2p_expression(latest_time)
+            dpval = dp.item()
+            d2pval = d2p.item()
+        
+            return (dpval,d2pval)
 
-        dpval = dp.item()
-        d2pval = d2p.item()
+        except (IndexError, ValueError, TypeError):
+            #print("error with poly or latest time")
+            pass
 
-        return ( dpval,d2pval)
+      
+     
+        
+        
+        
+
+
+      
+    
         
 
 
 def obtain_rwl(station):
-    rwl = station.relative_water_level()
+    rwl = station.consistent_relative_water_level()
 
     return rwl
 

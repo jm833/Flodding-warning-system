@@ -11,10 +11,10 @@ def polyfit(dates, levels, p):
     times = times - dt
     p_coeff = np.polyfit(times, levels, p)
     poly = np.poly1d(p_coeff)
-
-    return poly, dt
-
-
+    try:
+        return poly, dt
+    except(TypeError,ValueError):
+        pass
 
 
 

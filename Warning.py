@@ -6,10 +6,11 @@ def run():
 
     for station in data:
         try:
-            print(type(polynomial_derivatives(station)[0]))
-            print(type(polynomial_derivatives(station)[1]))
-        except TypeError:
-            print(0,0)
+            print(polynomial_derivatives(station)[0])
+            print(polynomial_derivatives(station)[1])
+        except(TypeError,KeyError):
+            #print(0,0)
+            pass
             
         
 
