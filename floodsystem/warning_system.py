@@ -56,6 +56,9 @@ def calculate_kvalue(stations):
     update_water_levels(stations)
 
     valid_rivers = []
+    green_alert = []
+    yellow_alert = []
+    red_alert = []
 
     for station in stations:
         if station.typical_range_consistent():
@@ -72,17 +75,24 @@ def calculate_kvalue(stations):
 
             if kvalue >= 0.6:
                 alert = name + "(green flooding alert)"
+                green_alert.append(alert)
             elif kvalue >= 0.8:
                 alert = name + "(yellow flooding alert)"
+                yellow_alert.append(alert)
             elif kvalue >= 1:
                 alert = name + "(red flooding alert)"
+                red_alert.append(alert)
             else:
                 continue
 
-            print(alert)
+            
+            
 
         except(TypeError,KeyError):
             pass
 
 
+    print(green_alert)
+    print(yellow_alert)
+    print(red_alert)
 
